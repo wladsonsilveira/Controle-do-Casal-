@@ -58,11 +58,23 @@ export default function LancamentosList({
           <div key={`${item.origem}-${item.id}`} className="item item-stack-mobile">
             <div>
               <strong>{item.descricao}</strong>
+
               <div className="meta">
                 {item.origem === 'receita' && `Receita • ${item.data_referencia}`}
-                {item.origem === 'gasto' && `Gasto ${item.tipo} • ${item.categoria} • ${item.data_referencia}`}
+
+                {item.origem === 'gasto' &&
+                  `Gasto ${item.tipo} • ${item.categoria} • ${item.data_referencia}`}
+
                 {item.origem === 'economia' && `Economia • ${item.data_referencia}`}
               </div>
+
+              {item.origem === 'gasto' && item.recorrente && (
+                <div style={{ marginTop: 8 }}>
+                  <span className="badge neutral">
+                    Recorrente • {item.frequencia || 'sem frequência'}
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="item-actions">

@@ -441,3 +441,22 @@ textarea {
     min-height: 280px;
   }
 }
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.check-row input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+}
+
+.recurring-box {
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: #f8fafc;
+}
