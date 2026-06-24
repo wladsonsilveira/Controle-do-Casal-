@@ -22,7 +22,7 @@ export default function MonthFilter({ month, setMonth, allMonths, setAllMonths }
   }
 
   return (
-    <div className="card" style={{ marginBottom: 24 }}>
+    <div className="card filter-card">
       <h2 style={{ marginBottom: 12 }}>Filtro mensal</h2>
 
       <div className="form-row">
@@ -35,7 +35,7 @@ export default function MonthFilter({ month, setMonth, allMonths, setAllMonths }
 
         <button
           type="button"
-          className="btn"
+          className="btn btn-secondary"
           onClick={() => {
             setMonth(getCurrentMonth());
             setAllMonths(false);

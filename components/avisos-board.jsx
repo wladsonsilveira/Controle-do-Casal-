@@ -3,16 +3,22 @@
 export default function AvisosBoard({ dashboard }) {
   const avisos = [];
 
-  if (dashboard.percentualUsado >= 100) {
-    avisos.push('Os gastos já ultrapassaram a receita. Revisem despesas variáveis hoje.');
-  } else if (dashboard.percentualUsado >= 80) {
-    avisos.push('Atenção: vocês já comprometeram boa parte da renda do mês.');
+  if (dashboard.limiteGastos > 0 && dashboard.percentualLimiteGastos >= 100) {
+    avisos.push('O limite de gastos do mês foi atingido. Vale revisar as despesas variáveis.');
+  } else if (dashboard.limiteGastos > 0 && dashboard.percentualLimiteGastos >= 80) {
+    avisos.push('Atenção: os gastos estão próximos do limite definido para o mês.');
   } else {
-    avisos.push('Situação saudável no momento. Continuem acompanhando os lançamentos.');
+    avisos.push('Os gastos estão sob controle no momento.');
   }
 
-  if (dashboard.saldo > 0) {
-    avisos.push('Avaliem separar parte do saldo para reserva ou meta do casal.');
+  if (dashboard.metaEconomia > 0 && dashboard.percentualMetaEconomia >= 100) {
+    avisos.push('Parabéns: a meta de economia do mês já foi concluída.');
+  } else if (dashboard.metaEconomia > 0) {
+    avisos.push('Continuem registrando economias para avançar na meta mensal.');
+  }
+
+  if (dashboard.saldo < 0) {
+    avisos.push('O saldo real ficou negativo. Talvez seja hora de segurar gastos não essenciais.');
   }
 
   return (

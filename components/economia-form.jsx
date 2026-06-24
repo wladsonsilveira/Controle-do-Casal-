@@ -6,22 +6,18 @@ import { supabase } from '../lib/supabase';
 const initialState = {
   descricao: '',
   valor: '',
-  categoria: 'Casa',
-  tipo: 'variavel',
   data_referencia: ''
 };
 
-export default function GastoForm({ onSaved, editingItem, onCancelEdit }) {
+export default function EconomiaForm({ onSaved, editingItem, onCancelEdit }) {
   const [form, setForm] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (editingItem?.origem === 'gasto') {
+    if (editingItem?.origem === 'economia') {
       setForm({
         descricao: editingItem.descricao || '',
         valor: editingItem.valor || '',
-        categoria: editingItem.categoria || 'Casa',
-        tipo: editingItem.tipo || 'variavel',
         data_referencia: editingItem.data_referencia || ''
       });
     }
@@ -34,19 +30,17 @@ export default function GastoForm({ onSaved, editingItem, onCancelEdit }) {
     const payload = {
       descricao: form.descricao,
       valor: Number(form.valor),
-      categoria: form.categoria,
-      tipo: form.tipo,
       data_referencia: form.data_referencia
     };
 
-    const query = editingItem?.origem === 'gasto'
-      ? supabase.from('gastos').update(payload).eq('id', editingItem.id)
-      : supabase.from('gastos').insert([payload]);
+    const query = editingItem?.origem === 'economia'
+      ? supabase.from('economias').update(payload).eq('id', editingItem.id)
+      : supabase.from('economias').insert([payload]);
 
     const { error } = await query;
 
     if (error) {
-      alert('Erro ao salvar gasto: ' + error.message);
+      alert('Erro ao salvar economia: ' + error.message);
       setLoading(false);
       return;
     }
@@ -59,7 +53,7 @@ export default function GastoForm({ onSaved, editingItem, onCancelEdit }) {
 
   return (
     <form className="form card" onSubmit={handleSubmit}>
-      <h2>{editingItem?.origem === 'gasto' ? 'Editar gasto' : 'Novo gasto'}</h2>
+      <h2>{editingItem?.origem === 'economia' ? 'Editar economia' : 'Nova economia'}</h2>
 
       <input
         className="input"
@@ -80,32 +74,6 @@ export default function GastoForm({ onSaved, editingItem, onCancelEdit }) {
           required
         />
 
-        <select
-          className="select"
-          value={form.categoria}
-          onChange={(e) => setForm({ ...form, categoria: e.target.value })}
-        >
-          <option>Casa</option>
-          <option>Mercado</option>
-          <option>Transporte</option>
-          <option>Saúde</option>
-          <option>Lazer</option>
-          <option>Educação</option>
-          <option>Assinaturas</option>
-          <option>Outros</option>
-        </select>
-      </div>
-
-      <div className="form-row">
-        <select
-          className="select"
-          value={form.tipo}
-          onChange={(e) => setForm({ ...form, tipo: e.target.value })}
-        >
-          <option value="fixo">Fixo</option>
-          <option value="variavel">Variável</option>
-        </select>
-
         <input
           className="input"
           type="date"
@@ -117,10 +85,10 @@ export default function GastoForm({ onSaved, editingItem, onCancelEdit }) {
 
       <div className="form-actions">
         <button className="btn" type="submit" disabled={loading}>
-          {loading ? 'Salvando...' : editingItem?.origem === 'gasto' ? 'Atualizar gasto' : 'Cadastrar gasto'}
+          {loading ? 'Salvando...' : editingItem?.origem === 'economia' ? 'Atualizar economia' : 'Cadastrar economia'}
         </button>
 
-        {editingItem?.origem === 'gasto' && (
+        {editingItem?.origem === 'economia' && (
           <button type="button" className="btn btn-secondary" onClick={onCancelEdit}>
             Cancelar
           </button>
